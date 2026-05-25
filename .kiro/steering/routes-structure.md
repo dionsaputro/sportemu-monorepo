@@ -78,12 +78,16 @@ lib/
 ```
 
 ## Landing Page Sections
-- Hero — headline + CTA "Mulai Sekarang" / "Hubungi Kami"
-- Features — fitur untuk admin dan trainer
-- How it works — 3 langkah simple
-- Pricing — cards paket
-- Testimonials
-- Footer — kontak, sosmed, link download app (App Store + Play Store)
+- Navbar — fixed, blur backdrop, logo + nav + "Login Pelatih" + "Daftar Les" CTA
+- Hero — split layout (text left, foto kolam right), floating animated cards, trust badges
+- Stats bar — counter animations (pelatih, murid, sesi, rating)
+- Kenapa Sportemu — 6 cards dengan foto Unsplash, hover zoom
+- Cara Kerja — 3 steps dengan gradient numbered badges
+- Pelatih — profil cards dengan foto, specialty, area
+- Paket Les — 3 pricing cards (Starter/Reguler/Intensif), "Paling Populer" badge
+- Testimoni — 6 review cards dengan star rating
+- CTA/Kontak — gradient section, WhatsApp + email
+- Footer — 4-column (brand, menu, kontak, copyright)
 
 ## Trainer Web UX Notes
 - Layout `/trainer/*` harus responsive mobile-first

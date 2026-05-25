@@ -44,29 +44,42 @@ Sportemu fokus di pelatihan renang — visual identity menggunakan warna kolam r
 - Forms: outlined inputs with clear labels
 
 ## Layout Principles
-- Admin: sidebar navigation (desktop), collapsible on tablet
-- Trainer web: sidebar on desktop, bottom nav on mobile browser
+- Admin: sidebar navigation (desktop), 240px width, ocean blue active state
+- Trainer web: sidebar on desktop (hidden md:flex), bottom nav on mobile (fixed bottom, md:hidden)
 - Flutter: bottom navigation bar
 - Mobile-first responsive design on trainer routes
 - Touch targets minimum 44x44px on mobile
+- Dashboard: max-w-6xl content area, bg-[#FAFBFC] background
+- Landing page: max-w-6xl, full-width sections with alternating bg (white/slate-50)
 
 ## Vibe
 - **Clean tapi sporty & energetic** — tidak kaku, menyenangkan diliat
-- Warna cyan memberikan kesan segar dan aquatic
-- Boleh pakai elemen dekoratif ringan (subtle gradients, rounded shapes, micro-interactions)
+- Warna ocean blue memberikan kesan segar dan aquatic
+- Scroll-in animations (fade + slide up) via Framer Motion
+- Hover effects pada cards (scale, shadow, border color change)
 - Skeleton loading states untuk perceived performance
-- Gunakan emoji atau icon yang playful di dashboard/empty states
 - Tone copywriting: casual, friendly, pakai bahasa Indonesia sehari-hari
 
 ## Assets & Resources
-- **Icons:** Lucide Icons (web), Material Icons (Flutter) — boleh tambah icon pack lain jika perlu
-- **Ilustrasi:** Boleh pakai free stock illustrations (undraw.co, storyset.com, dll) untuk empty states, onboarding, landing page
-- **Gambar:** Unsplash/Pexels untuk hero images dan background (tema: swimming, fitness, water)
-- **Micro-interactions:** Subtle animations pada button hover, page transitions, success states
-- **Empty states:** Jangan kosong — selalu ada ilustrasi + pesan yang friendly & encouraging
+- **Icons:** Lucide React — single color (sky-700/sky-800), consistent sizing
+- **Ilustrasi:** Unsplash photos untuk landing page (tema: swimming, pool, coaching, fitness)
+- **Gambar pelatih:** Unsplash portraits (placeholder, ganti dengan foto asli nanti)
+- **Animations:** Framer Motion — scroll-triggered fade-in, floating cards, counter animations
+- **Empty states:** Lucide icon + helpful text, no emojis in dashboard UI
 
 ## Tone & Personality
 - App terasa seperti teman yang bantu manage jadwal, bukan software enterprise
-- Greeting di dashboard: "Halo, Budi! 🏊‍♂️ Ada 2 sesi hari ini"
-- Success messages yang fun: "Check-in berhasil! 💪"
+- Landing page: iklanin les renang ke calon klien (bukan jualan platform SaaS)
+- Dashboard: clean, data-focused, minimal decorative elements
+- Success messages yang fun: "Check-in berhasil! 💪" (emoji OK di toast/notification)
 - Error messages yang helpful, bukan menakutkan
+
+## Landing Page
+- Target audience: calon klien yang mau les renang/olahraga
+- Hero: foto kolam + headline + CTA (WhatsApp + lihat paket)
+- Sections: Kenapa Kami, Cara Kerja, Pelatih, Paket, Testimoni, CTA/Kontak
+- Semua section punya scroll animation
+- Cards dengan foto dari Unsplash, hover zoom effect
+- Pricing cards dengan "Paling Populer" badge
+- CTA mengarah ke WhatsApp (bukan signup form)
+- Login pelatih ada tapi subtle (navbar kanan)

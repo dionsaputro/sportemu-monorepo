@@ -10,7 +10,7 @@
 - **Tables:** TanStack Table
 - **Calendar:** date-fns + React Big Calendar
 - **File upload:** Supabase Storage SDK
-- **Landing page:** Framer Motion untuk animasi (opsional)
+- **Landing page:** Framer Motion untuk scroll animations + hover effects
 - **Check-in web:** `<input type="file" accept="image/*" capture="environment">`
 
 ## Mobile App (`apps/mobile`)

@@ -4,14 +4,24 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
+import {
+  LayoutDashboard,
+  Calendar,
+  Waves,
+  Clock,
+  Receipt,
+  Bell,
+  LogOut,
+  Plus,
+} from 'lucide-react'
 
 const navItems = [
-  { href: '/trainer', label: 'Beranda', icon: '🏠' },
-  { href: '/trainer/schedule', label: 'Jadwal', icon: '📅' },
-  { href: '/trainer/sessions', label: 'Sesi', icon: '🏊' },
-  { href: '/trainer/availability', label: 'Slot', icon: '⏰' },
-  { href: '/trainer/outstanding', label: 'Outstanding', icon: '💰' },
-  { href: '/trainer/notifications', label: 'Notifikasi', icon: '🔔' },
+  { href: '/trainer', label: 'Beranda', icon: LayoutDashboard },
+  { href: '/trainer/schedule', label: 'Jadwal', icon: Calendar },
+  { href: '/trainer/sessions', label: 'Sesi', icon: Waves },
+  { href: '/trainer/availability', label: 'Slot', icon: Clock },
+  { href: '/trainer/outstanding', label: 'Outstanding', icon: Receipt },
+  { href: '/trainer/notifications', label: 'Notifikasi', icon: Bell },
 ]
 
 export function TrainerSidebar({ userName }: { userName: string }) {
@@ -26,16 +36,22 @@ export function TrainerSidebar({ userName }: { userName: string }) {
   }
 
   return (
-    <aside className="hidden w-64 flex-col border-r bg-card md:flex">
+    <aside className="hidden w-[240px] flex-col border-r border-slate-200 bg-white md:flex">
       {/* Brand */}
-      <div className="flex h-16 items-center gap-3 border-b px-6">
-        <span className="text-2xl">🏊</span>
-        <span className="text-lg font-bold text-foreground">Sportemu</span>
+      <div className="flex h-14 items-center gap-2.5 px-5">
+        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-700">
+          <Waves className="h-4 w-4 text-white" />
+        </div>
+        <span className="text-sm font-bold text-sky-900">Sportemu</span>
+        <span className="ml-auto rounded-md bg-sky-50 px-1.5 py-0.5 text-[10px] font-semibold text-sky-700">
+          Trainer
+        </span>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-4">
+      <nav className="flex-1 space-y-0.5 px-3 pt-2">
         {navItems.map((item) => {
+          const Icon = item.icon
           const isActive =
             item.href === '/trainer'
               ? pathname === '/trainer'
@@ -46,36 +62,45 @@ export function TrainerSidebar({ userName }: { userName: string }) {
               key={item.href}
               href={item.href}
               className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                'flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors',
                 isActive
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-sky-700 text-white'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-sky-900'
               )}
             >
-              <span className="text-lg">{item.icon}</span>
+              <Icon className={cn('h-4 w-4', isActive ? 'text-white' : 'text-slate-500')} />
               {item.label}
             </Link>
           )
         })}
+
+        {/* Quick action */}
+        <div className="pt-3">
+          <Link
+            href="/trainer/sessions/new"
+            className="flex items-center gap-2.5 rounded-lg border border-dashed border-slate-200 px-3 py-2 text-[13px] font-medium text-slate-500 transition-colors hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+          >
+            <Plus className="h-4 w-4" />
+            Tambah Sesi
+          </Link>
+        </div>
       </nav>
 
-      {/* User section */}
-      <div className="border-t p-4">
-        <div className="mb-3 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+      {/* User */}
+      <div className="border-t border-slate-100 p-3">
+        <div className="flex items-center gap-2.5 rounded-lg px-3 py-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-700 text-[10px] font-bold text-white">
             {userName.charAt(0).toUpperCase()}
           </div>
-          <div className="flex-1 truncate">
-            <p className="truncate text-sm font-medium">{userName}</p>
-            <p className="text-xs text-muted-foreground">Trainer</p>
-          </div>
+          <span className="flex-1 truncate text-[13px] font-medium text-slate-700">{userName}</span>
+          <button
+            onClick={handleLogout}
+            className="rounded-md p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+            title="Keluar"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+          </button>
         </div>
-        <button
-          onClick={handleLogout}
-          className="w-full rounded-lg border px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          Keluar
-        </button>
       </div>
     </aside>
   )

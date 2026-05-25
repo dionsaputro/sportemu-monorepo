@@ -1046,3 +1046,38 @@ Buat data berikut untuk development:
 ---
 
 *Sportemu AGENT.md — v3.0 (Flutter + Next.js + Supabase, trainer web & mobile)*
+
+
+---
+
+## Changelog (Post-Implementation Updates)
+
+### Design Changes
+- **Primary color:** Changed from Cyan 500 to Ocean Blue (Sky 700, `#0369a1`)
+- **Icon style:** Lucide React only, single color (sky-700/800), no emojis in dashboard
+- **Landing page:** Iklanin les renang ke calon klien (bukan jualan platform SaaS)
+- **Animations:** Framer Motion scroll-in animations + hover effects on landing page
+
+### Schema Changes
+- **`payment_type` moved to enrollment level** — removed from trainers table. Admin/trainer pilih saat bikin enrollment. Satu trainer bisa punya mix prepaid/postpaid klien.
+- **New tables:** `specialties`, `trainer_specialties` (many-to-many), `cities`, `trainer_available_cities` (many-to-many)
+- **`trainers` table:** Added `home_city_id`. `payment_type` deprecated (nullable).
+- **`customers` table:** Added `city_id`
+- **`enrollments` table:** Added `booking_token` (unique, for shareable calendar link)
+
+### New Features (not in original spec)
+- **Specialties & Cities** — dynamic, admin-managed via DB tables
+- **Shareable Booking Calendar** (Mode D) — `/book/{booking_token}`, klien booking sendiri tanpa login
+- **Trainer self-schedule** (Mode C) — trainer bisa input jadwal klien langsung
+- **Auto-invoice prepaid** — invoice otomatis dibuat saat enrollment prepaid dibuat
+- **City compatibility warning** — warning saat enrollment jika klien di luar area trainer
+
+### Booking Modes (Updated)
+- **Mode A:** Customer propose via admin → proposed → trainer approve
+- **Mode B:** Trainer set availability slot → admin assign customer
+- **Mode C:** Trainer input jadwal klien langsung → auto-approved
+- **Mode D:** Klien self-booking via shareable calendar link → proposed → trainer approve
+
+---
+
+*Sportemu AGENT.md — v4.0 (Updated post-implementation)*

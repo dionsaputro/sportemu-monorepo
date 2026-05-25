@@ -68,7 +68,7 @@ function LoginForm() {
             </p>
           </div>
           <p className="text-sm text-sky-200">
-            © 2024 Sportemu. All rights reserved.
+            © 2026 Sportemu. All rights reserved.
           </p>
         </div>
       </div>
