@@ -6,24 +6,18 @@ import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import {
   LayoutDashboard,
-  UserCheck,
-  Package,
   Users,
-  ClipboardList,
-  Receipt,
-  Calendar,
+  CreditCard,
+  Settings,
   LogOut,
   Waves,
 } from 'lucide-react'
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/trainers', label: 'Pelatih', icon: UserCheck },
-  { href: '/admin/packages', label: 'Paket', icon: Package },
-  { href: '/admin/customers', label: 'Customer', icon: Users },
-  { href: '/admin/enrollments', label: 'Enrollment', icon: ClipboardList },
-  { href: '/admin/invoices', label: 'Invoice', icon: Receipt },
-  { href: '/admin/schedule', label: 'Jadwal', icon: Calendar },
+  { href: '/admin/trainers', label: 'Subscribers', icon: Users },
+  { href: '/admin/plans', label: 'Plans', icon: CreditCard },
+  { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 
 export function AdminSidebar({ userName }: { userName: string }) {
@@ -45,6 +39,9 @@ export function AdminSidebar({ userName }: { userName: string }) {
           <Waves className="h-4 w-4 text-white" />
         </div>
         <span className="text-sm font-bold text-sky-900">Sportemu</span>
+        <span className="ml-auto rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600">
+          Admin
+        </span>
       </div>
 
       {/* Navigation */}

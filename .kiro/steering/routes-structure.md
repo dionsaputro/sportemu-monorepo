@@ -4,54 +4,53 @@
 
 ```
 app/
-├── page.tsx                              # Landing page (public)
-├── about/page.tsx                        # Tentang kami (public)
-├── pricing/page.tsx                      # Harga & paket (public)
+├── page.tsx                              # Landing page — jualan SaaS ke trainer
+├── pricing/page.tsx                      # Pricing plans (free vs paid)
 │
 ├── (auth)/
-│   └── login/page.tsx                   # Login admin & trainer
+│   ├── login/page.tsx                   # Login trainer & admin
+│   └── signup/page.tsx                  # Trainer self-signup (freemium)
 │
-├── admin/
-│   ├── layout.tsx                        # Shell + sidebar admin
-│   ├── page.tsx                          # Dashboard: stats + recent activity
-│   ├── trainers/
-│   │   ├── page.tsx                      # Daftar pelatih
-│   │   ├── new/page.tsx
-│   │   └── [id]/
-│   │       ├── page.tsx                  # Detail + jadwal trainer
-│   │       └── edit/page.tsx
-│   ├── packages/
-│   │   ├── page.tsx
-│   │   ├── new/page.tsx
-│   │   └── [id]/edit/page.tsx
-│   ├── customers/
-│   │   ├── page.tsx
-│   │   ├── new/page.tsx
-│   │   └── [id]/
-│   │       ├── page.tsx                  # Detail + enrollment list
-│   │       └── enrollments/new/page.tsx
-│   ├── enrollments/
-│   │   ├── page.tsx
-│   │   └── [id]/
-│   │       ├── page.tsx                  # Detail + session list
-│   │       └── sessions/new/page.tsx     # Propose sesi (Mode A)
-│   ├── invoices/
-│   │   ├── page.tsx
-│   │   └── [id]/page.tsx                 # Detail + verifikasi pembayaran
-│   └── schedule/page.tsx                 # Kalender global semua trainer
+├── admin/                                # Super Admin (Sportemu platform)
+│   ├── layout.tsx
+│   ├── page.tsx                          # Dashboard: subscriber metrics, revenue
+│   ├── trainers/                         # Manage trainer subscribers
+│   │   ├── page.tsx                      # List all trainers + subscription status
+│   │   └── [id]/page.tsx                 # Trainer detail + subscription management
+│   ├── plans/                            # Subscription plans config
+│   │   └── page.tsx                      # Manage plans & limits
+│   └── settings/page.tsx                 # Platform settings
 │
-└── trainer/
-    ├── layout.tsx                         # Shell + nav (sidebar desktop, bottom nav mobile)
-    ├── page.tsx                           # Dashboard: sesi hari ini + outstanding
-    ├── schedule/page.tsx                  # Kalender sesi + availability
-    ├── sessions/
-    │   ├── page.tsx                       # Daftar sesi (upcoming, completed)
-    │   └── [id]/
-    │       ├── page.tsx                   # Detail sesi
-    │       └── checkin/page.tsx           # Check-in/out: kamera + konfirmasi
-    ├── availability/page.tsx              # Set slot mingguan
-    ├── outstanding/page.tsx               # Outstanding pembayaran & pengajaran
-    └── notifications/page.tsx            # Daftar notifikasi (in-app)
+├── trainer/                              # Trainer dashboard (paying customer)
+│   ├── layout.tsx
+│   ├── page.tsx                          # Dashboard: sesi hari ini, calendar, share links
+│   ├── clients/                          # Manage klien (was: customers)
+│   │   ├── page.tsx
+│   │   ├── new/page.tsx
+│   │   └── [id]/page.tsx
+│   ├── packages/                         # Manage paket & harga sendiri
+│   │   ├── page.tsx
+│   │   └── new/page.tsx
+│   ├── enrollments/                      # Manage enrollment klien ke paket
+│   │   ├── page.tsx
+│   │   ├── new/page.tsx
+│   │   └── [id]/
+│   │       ├── page.tsx
+│   │       └── sessions/new/page.tsx
+│   ├── schedule/page.tsx                 # Kalender sesi
+│   ├── sessions/
+│   │   ├── page.tsx
+│   │   ├── new/page.tsx
+│   │   └── [id]/
+│   │       ├── page.tsx
+│   │       └── checkin/page.tsx
+│   ├── availability/page.tsx             # Set slot mingguan
+│   ├── invoices/page.tsx                 # Invoice ke klien
+│   ├── outstanding/page.tsx
+│   ├── notifications/page.tsx
+│   └── settings/page.tsx                 # Trainer profile & subscription info
+│
+└── book/[token]/page.tsx                 # Public booking page (klien, no login)
 ```
 
 ## Flutter Structure (`apps/mobile/lib/`)

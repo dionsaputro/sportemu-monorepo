@@ -1,5 +1,33 @@
 # Business Logic & Rules
 
+## SaaS Model
+
+### Trainer Subscription
+- Trainer signup sendiri dari landing page (email + password)
+- Default: free tier (5 klien, 20 sesi/bulan)
+- Upgrade: manual (admin approve) — Stripe integration nanti
+- Subscription status: free, active, expired, cancelled
+
+### Trainer Capabilities
+- Manage klien sendiri (CRUD customers)
+- Set paket & harga sendiri (CRUD packages)
+- Manage jadwal & availability
+- Bikin invoice sendiri ke klien
+- Check-in/out dengan foto
+- Share booking calendar ke klien
+
+### Admin (Sportemu) Capabilities
+- Lihat semua trainer subscribers
+- Manage subscription plans & limits
+- Approve/reject subscription upgrades
+- View platform metrics (revenue, active trainers, total sessions)
+- Configure free tier limits
+
+### Freemium Limits (configurable by admin)
+- Free: max 5 klien, max 20 sesi/bulan
+- Enforce via middleware/RLS — block create jika limit tercapai
+- Show upgrade prompt saat limit hampir penuh
+
 ## Hybrid Booking Flow
 
 ### Mode A — Customer Propose (via Admin)
