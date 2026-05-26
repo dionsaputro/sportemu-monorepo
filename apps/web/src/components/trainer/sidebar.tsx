@@ -13,14 +13,20 @@ import {
   Bell,
   LogOut,
   Plus,
+  Users,
+  Package,
+  ClipboardList,
 } from 'lucide-react'
 
 const navItems = [
   { href: '/trainer', label: 'Beranda', icon: LayoutDashboard },
+  { href: '/trainer/clients', label: 'Klien', icon: Users },
+  { href: '/trainer/packages', label: 'Paket', icon: Package },
+  { href: '/trainer/enrollments', label: 'Enrollment', icon: ClipboardList },
   { href: '/trainer/schedule', label: 'Jadwal', icon: Calendar },
   { href: '/trainer/sessions', label: 'Sesi', icon: Waves },
   { href: '/trainer/availability', label: 'Slot', icon: Clock },
-  { href: '/trainer/outstanding', label: 'Outstanding', icon: Receipt },
+  { href: '/trainer/invoices', label: 'Invoice', icon: Receipt },
   { href: '/trainer/notifications', label: 'Notifikasi', icon: Bell },
 ]
 

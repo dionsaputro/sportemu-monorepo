@@ -1,15 +1,28 @@
 # Sportemu — Project Overview
 
-## Ringkasan
+## Business Model: SaaS for Sports Coaches
 
-Aplikasi manajemen pelatih privat (renang, gym, dll) dengan tiga aktor:
-- **Admin** — input semua data, kelola pelatih, paket, customer, invoice
-- **Trainer** — kelola jadwal, check-in/out dengan foto, lihat outstanding
-- **Customer** — tidak punya login; semua interaksi diwakilkan admin
+Sportemu adalah platform SaaS untuk pelatih olahraga independen (renang, gym, yoga, dll).
 
-Platform: Web (Next.js 15) + Mobile (Flutter), backend Supabase.
+### Aktor:
+- **Super Admin (Sportemu)** — kelola subscribers, billing, platform config
+- **Trainer** — paying customer. Full control: manage klien, paket, jadwal, invoice, check-in
+- **Klien** — murid si trainer. Tidak punya login, booking via shareable link
 
-Trainer dapat menggunakan web atau mobile — keduanya feature-complete. Flutter adalah pilihan utama (experience lebih baik untuk check-in foto via kamera native), tapi web trainer dashboard berfungsi penuh sebagai alternatif.
+### Revenue:
+- Trainer bayar subscription ke Sportemu (freemium model)
+- Free: 5 klien, 20 sesi/bulan (configurable)
+- Paid: unlimited (manual billing dulu, Stripe nanti)
+
+### Key Difference from Before:
+- SEBELUM: Admin kelola semua, trainer cuma execute
+- SEKARANG: Trainer kelola sendiri, admin cuma kelola platform & subscribers
+
+## Multi-tenant Strategy
+- **MVP (sekarang):** Single database, filtered by `trainer_id`
+- **Scale (nanti):** Row-level tenant isolation atau separate schemas
+- Semua query HARUS filter by trainer_id (kecuali admin)
+- Pastikan RLS enforce tenant isolation
 
 ## Monorepo Structure (Turborepo)
 
@@ -21,7 +34,7 @@ trainerapp/
 ├── packages/
 │   └── types/                # Shared TypeScript types & Zod schemas
 ├── supabase/
-│   ├── migrations/           # SQL migration files (001–012)
+│   ├── migrations/           # SQL migration files
 │   ├── seed.sql              # Dev seed data
 │   └── functions/            # Edge Functions (Deno)
 ├── turbo.json
@@ -30,9 +43,11 @@ trainerapp/
 
 ## Key Principles
 
-- Trainer web adalah first-class citizen — bukan fallback
-- Anti-fake timestamp: `server_ts` pada `check_ins` selalu dari server (`default now()`)
+- Trainer adalah first-class citizen — mereka paying customer
+- Trainer punya full control atas bisnis mereka (klien, paket, harga, jadwal)
+- Admin (Sportemu) hanya kelola platform, subscribers, dan billing
+- Anti-fake timestamp: `server_ts` pada `check_ins` selalu dari server
 - Foto check-in dikompres client-side (max 800px, JPEG quality 0.7, target < 500KB)
-- Booking window validation dilakukan di server, bukan hanya client
-- Invoice numbering via PostgreSQL sequence (anti race condition)
-- FCM hanya untuk Flutter; web pakai Supabase Realtime
+- Booking window validation dilakukan di server
+- Landing page: jualan platform ke trainer ("Kelola bisnis pelatihan kamu lebih mudah")
+- Freemium: enforce limits via database/middleware

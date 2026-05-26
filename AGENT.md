@@ -2,14 +2,27 @@
 
 ## Ringkasan Proyek
 
-Aplikasi manajemen pelatih privat (renang, gym, dll) dengan tiga aktor utama:
-- **Admin** — input semua data, kelola pelatih, paket, customer, invoice
-- **Trainer** — kelola jadwal, check-in/out dengan foto, lihat outstanding
-- **Customer** — tidak punya login; semua interaksi diwakilkan admin
+**Sportemu** adalah platform SaaS untuk pelatih olahraga independen (renang, gym, yoga, dll).
+
+### Business Model: SaaS (B2B2C)
+- **Sportemu** = platform (jualan subscription ke trainer)
+- **Trainer** = paying customer (subscribe, kelola bisnis sendiri)
+- **Klien** = murid si trainer (ga interact langsung sama Sportemu)
+
+### Aktor:
+- **Super Admin (Sportemu)** — kelola subscribers, billing, platform config, subscription plans
+- **Trainer** — full control: manage klien, paket, jadwal, invoice, check-in. Bayar subscription ke Sportemu.
+- **Klien** — tidak punya login; booking via shareable link, semua diwakilkan trainer
+
+### Freemium Model:
+- **Free tier:** limited (misal 5 klien, 20 sesi/bulan) — configurable by admin
+- **Paid tier:** unlimited (atau tier-based) — manual billing dulu, Stripe nanti
+
+### Multi-tenant Strategy:
+- **MVP:** Single database, filtered by `trainer_id` (current approach)
+- **Scale:** Siap untuk multi-tenant isolation nanti (separate schemas atau row-level tenant isolation)
 
 Platform: **Web** (Next.js 15) + **Mobile** (Flutter, iOS & Android), backend **Supabase**.
-
-Trainer dapat menggunakan **web atau mobile** — keduanya feature-complete. Flutter adalah pilihan utama (experience lebih baik untuk check-in foto via kamera native), tapi web trainer dashboard berfungsi penuh sebagai alternatif bagi trainer yang tidak menginstall app.
 
 ---
 
