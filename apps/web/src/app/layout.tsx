@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { ToastProvider } from '@/components/ui/toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Sportemu — Manajemen Pelatih Privat',
-  description: 'Platform manajemen pelatih privat untuk renang, gym, dan olahraga lainnya.',
+  title: 'Sportemu — Platform untuk Pelatih Olahraga',
+  description: 'Kelola bisnis pelatihan kamu lebih mudah. Klien, jadwal, invoice, check-in dalam satu platform.',
 }
 
 export default function RootLayout({
@@ -18,9 +17,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className={inter.className}>
-        <ToastProvider>
-          {children}
-        </ToastProvider>
+        {children}
       </body>
     </html>
   )
