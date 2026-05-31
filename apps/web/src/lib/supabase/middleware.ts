@@ -47,6 +47,19 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/book')
 
+  // If user is logged in and trying to access login/signup, redirect to dashboard
+  if (user && (pathname === '/login' || pathname === '/signup')) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    const url = request.nextUrl.clone()
+    url.pathname = profile?.role === 'admin' ? '/admin' : '/trainer'
+    return NextResponse.redirect(url)
+  }
+
   if (isPublicRoute) {
     return supabaseResponse
   }

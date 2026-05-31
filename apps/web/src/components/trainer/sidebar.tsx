@@ -16,6 +16,7 @@ import {
   Users,
   Package,
   ClipboardList,
+  UsersRound,
 } from 'lucide-react'
 
 const navItems = [
@@ -27,6 +28,7 @@ const navItems = [
   { href: '/trainer/sessions', label: 'Sesi', icon: Waves },
   { href: '/trainer/availability', label: 'Slot', icon: Clock },
   { href: '/trainer/invoices', label: 'Invoice', icon: Receipt },
+  { href: '/trainer/team', label: 'Tim', icon: UsersRound },
   { href: '/trainer/notifications', label: 'Notifikasi', icon: Bell },
 ]
 

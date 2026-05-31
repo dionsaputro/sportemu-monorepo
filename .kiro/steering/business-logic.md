@@ -25,8 +25,18 @@
 
 ### Freemium Limits (configurable by admin)
 - Free: max 5 klien, max 20 sesi/bulan
+- Pro: max 50 klien, max 500 sesi/bulan
+- Enterprise: unlimited + multi-trainer (organization)
 - Enforce via middleware/RLS — block create jika limit tercapai
 - Show upgrade prompt saat limit hampir penuh
+
+### Multi-Trainer (Enterprise)
+- Enterprise trainer bisa buat "Organization"
+- Undang pelatih lain ke organisasi (mereka ga perlu bayar sendiri)
+- Owner bisa lihat data semua anggota tim
+- Subscription Enterprise cover semua member
+- Roles: owner, admin, trainer
+- Database: `organizations` + `organization_members` tables
 
 ## Hybrid Booking Flow
 
