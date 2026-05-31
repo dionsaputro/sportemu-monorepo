@@ -18,6 +18,7 @@ export default function TrainerNewSessionPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [limitWarning, setLimitWarning] = useState('')
   const [enrollments, setEnrollments] = useState<Enrollment[]>([])
 
   const [form, setForm] = useState({
@@ -32,6 +33,28 @@ export default function TrainerNewSessionPage() {
     async function loadEnrollments() {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
+
+      // Check session limit
+      const { data: sub } = await supabase
+        .from('trainer_subscriptions')
+        .select('subscription_plans(max_sessions_per_month, name)')
+        .eq('trainer_id', user!.id)
+        .in('status', ['free', 'active'])
+        .single()
+
+      const maxSessions = (sub?.subscription_plans as any)?.max_sessions_per_month ?? 20
+      if (maxSessions !== -1) {
+        const now = new Date()
+        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0]
+        const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0]
+        const { count } = await supabase.from('sessions').select('id', { count: 'exact', head: true }).eq('trainer_id', user!.id).gte('scheduled_date', monthStart).lte('scheduled_date', monthEnd)
+        const remaining = maxSessions - (count || 0)
+        if (remaining <= 3 && remaining > 0) {
+          setLimitWarning(`Sisa ${remaining} sesi bulan ini (plan ${(sub?.subscription_plans as any)?.name})`)
+        } else if (remaining <= 0) {
+          setError(`Limit sesi bulan ini tercapai (${maxSessions} sesi). Upgrade plan untuk menambah.`)
+        }
+      }
 
       const { data } = await supabase
         .from('enrollments')
@@ -104,6 +127,9 @@ export default function TrainerNewSessionPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
             <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700">{error}</div>
+          )}
+          {limitWarning && (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-700">{limitWarning}</div>
           )}
 
           <div>

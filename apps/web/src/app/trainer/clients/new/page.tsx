@@ -3,19 +3,46 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
 
 export default function TrainerNewClientPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [limitReached, setLimitReached] = useState(false)
+  const [limitInfo, setLimitInfo] = useState('')
   const [cities, setCities] = useState<{ id: string; name: string }[]>([])
   const [form, setForm] = useState({ full_name: '', phone: '', email: '', city_id: '', notes: '' })
 
   useEffect(() => {
     async function load() {
       const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      // Check limits
+      const { data: sub } = await supabase
+        .from('trainer_subscriptions')
+        .select('subscription_plans(max_clients, name)')
+        .eq('trainer_id', user!.id)
+        .in('status', ['free', 'active'])
+        .single()
+
+      const maxClients = (sub?.subscription_plans as any)?.max_clients ?? 5
+      const planName = (sub?.subscription_plans as any)?.name ?? 'Free'
+
+      if (maxClients !== -1) {
+        const { count } = await supabase
+          .from('customers')
+          .select('id', { count: 'exact', head: true })
+          .eq('created_by', user!.id)
+
+        if ((count || 0) >= maxClients) {
+          setLimitReached(true)
+          setLimitInfo(`Plan ${planName} kamu hanya bisa ${maxClients} klien. Upgrade untuk menambah lebih banyak.`)
+        }
+      }
+
       const { data } = await supabase.from('cities').select('id, name').eq('is_active', true).order('name')
       setCities(data || [])
     }
@@ -66,6 +93,16 @@ export default function TrainerNewClientPage() {
       </div>
 
       <div className="max-w-lg rounded-xl border border-slate-200 bg-white p-6">
+        {limitReached ? (
+          <div className="flex flex-col items-center py-8 text-center">
+            <AlertTriangle className="h-10 w-10 text-amber-500" />
+            <p className="mt-3 text-sm font-medium text-sky-900">Limit klien tercapai</p>
+            <p className="mt-1 text-xs text-slate-500">{limitInfo}</p>
+            <Link href="/trainer/settings" className="mt-4 rounded-lg bg-sky-700 px-4 py-2 text-sm font-medium text-white hover:bg-sky-800">
+              Lihat Upgrade Options
+            </Link>
+          </div>
+        ) : (
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700">{error}</div>}
 
@@ -101,6 +138,7 @@ export default function TrainerNewClientPage() {
             <Link href="/trainer/clients" className="rounded-lg border border-slate-200 px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50">Batal</Link>
           </div>
         </form>
+        )}
       </div>
     </div>
   )
