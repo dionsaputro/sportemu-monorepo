@@ -17,6 +17,7 @@ import {
   Package,
   ClipboardList,
   UsersRound,
+  Settings,
 } from 'lucide-react'
 
 const navItems = [
@@ -30,6 +31,7 @@ const navItems = [
   { href: '/trainer/invoices', label: 'Invoice', icon: Receipt },
   { href: '/trainer/team', label: 'Tim', icon: UsersRound },
   { href: '/trainer/notifications', label: 'Notifikasi', icon: Bell },
+  { href: '/trainer/settings', label: 'Settings', icon: Settings },
 ]
 
 export function TrainerSidebar({ userName }: { userName: string }) {
